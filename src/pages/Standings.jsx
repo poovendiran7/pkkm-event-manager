@@ -10,17 +10,29 @@ const Standings = () => {
 
   const selectedGameData = GAMES.find(g => g.id === selectedGame);
   const currentResults = results[selectedGame] || [];
+  const currentSchedules = schedules[selectedGame] || [];
 
-  // Calculate standings for group stage games
-  const calculateGroupStageStandings = () => {
-    if (!selectedGameData.hasGroupStage) return null;
+  // Get all groups that have schedules
+  const getAvailableGroups = () => {
+    const groups = new Set();
+    currentSchedules.forEach(schedule => {
+      if (schedule.round && schedule.round.startsWith('Group ')) {
+        groups.add(schedule.round);
+      }
+    });
+    return Array.from(groups).sort();
+  };
 
+  const availableGroups = useMemo(() => getAvailableGroups(), [currentSchedules]);
+
+  // Calculate standings for a specific group
+  const calculateGroupStandings = (groupName) => {
     const teamStats = {};
 
-    // Only process Group Stage results
-    const groupStageResults = currentResults.filter(result => result.round === 'Group Stage');
+    // Only process results for this specific group
+    const groupResults = currentResults.filter(result => result.round === groupName);
 
-    groupStageResults.forEach(result => {
+    groupResults.forEach(result => {
       const { team1, team2, score1, score2, winner, isDraw } = result;
 
       // Initialize teams if not exists
@@ -97,7 +109,73 @@ const Standings = () => {
     });
   };
 
-  const standings = useMemo(() => calculateGroupStageStandings(), [selectedGame, currentResults]);
+  // Render a standings table for a specific group
+  const renderGroupTable = (groupName) => {
+    const standings = calculateGroupStandings(groupName);
+
+    if (!standings || standings.length === 0) return null;
+
+    return (
+      <div key={groupName} className="mb-8 last:mb-0">
+        <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <Trophy className="text-purple-600 mr-2" size={24} />
+          {groupName}
+        </h4>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                <th className="px-4 py-3 text-left font-semibold">Pos</th>
+                <th className="px-4 py-3 text-left font-semibold">Team</th>
+                <th className="px-4 py-3 text-center font-semibold">P</th>
+                <th className="px-4 py-3 text-center font-semibold">W</th>
+                <th className="px-4 py-3 text-center font-semibold">D</th>
+                <th className="px-4 py-3 text-center font-semibold">L</th>
+                <th className="px-4 py-3 text-center font-semibold">GF</th>
+                <th className="px-4 py-3 text-center font-semibold">GA</th>
+                <th className="px-4 py-3 text-center font-semibold">GD</th>
+                <th className="px-4 py-3 text-center font-semibold bg-yellow-500">Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {standings.map((team, index) => (
+                <tr
+                  key={team.name}
+                  className={`border-b transition-all hover:bg-purple-50 ${
+                    index === 0 ? 'bg-yellow-50 font-semibold' : ''
+                  }`}
+                >
+                  <td className="px-4 py-3 text-center">
+                    <div
+                      className={`flex items-center justify-center ${
+                        index === 0 ? 'text-yellow-600' : 'text-gray-700'
+                      }`}
+                    >
+                      {index + 1}
+                      {index === 0 && <Trophy size={16} className="ml-1" />}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 font-semibold text-gray-800">{team.name}</td>
+                  <td className="px-4 py-3 text-center text-gray-600">{team.played}</td>
+                  <td className="px-4 py-3 text-center text-green-600 font-semibold">{team.won}</td>
+                  <td className="px-4 py-3 text-center text-yellow-600">{team.drawn}</td>
+                  <td className="px-4 py-3 text-center text-red-600">{team.lost}</td>
+                  <td className="px-4 py-3 text-center text-gray-700">{team.goalsFor}</td>
+                  <td className="px-4 py-3 text-center text-gray-700">{team.goalsAgainst}</td>
+                  <td className={`px-4 py-3 text-center font-semibold ${
+                    team.goalDifference > 0 ? 'text-green-600' : team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600'
+                  }`}>
+                    {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
+                  </td>
+                  <td className="px-4 py-3 text-center font-bold text-lg bg-yellow-100">{team.points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
 
   const renderGameIcon = (game) => {
     if (game.icon === 'carrom-board') {
@@ -138,64 +216,15 @@ const Standings = () => {
           <div>
             <h3 className="text-2xl font-bold text-gray-800">{selectedGameData.name} Standings</h3>
             <p className="text-gray-600">
-              {selectedGameData.hasGroupStage ? 'Group Stage Table' : 'Knockout Stage'}
+              {selectedGameData.hasGroupStage ? 'Group Stage Tables' : 'Knockout Stage'}
             </p>
           </div>
         </div>
 
-        {selectedGameData.hasGroupStage && standings && standings.length > 0 ? (
-          /* Group Stage Table */
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-                  <th className="px-4 py-3 text-left font-semibold">Pos</th>
-                  <th className="px-4 py-3 text-left font-semibold">Team</th>
-                  <th className="px-4 py-3 text-center font-semibold">P</th>
-                  <th className="px-4 py-3 text-center font-semibold">W</th>
-                  <th className="px-4 py-3 text-center font-semibold">D</th>
-                  <th className="px-4 py-3 text-center font-semibold">L</th>
-                  <th className="px-4 py-3 text-center font-semibold">GF</th>
-                  <th className="px-4 py-3 text-center font-semibold">GA</th>
-                  <th className="px-4 py-3 text-center font-semibold">GD</th>
-                  <th className="px-4 py-3 text-center font-semibold bg-yellow-500">Pts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {standings.map((team, index) => (
-                  <tr
-                    key={team.name}
-                    className={`border-b transition-all hover:bg-purple-50 ${
-                      index === 0 ? 'bg-yellow-50 font-semibold' : ''
-                    }`}
-                  >
-                    <td className="px-4 py-3 text-center">
-                      <div
-                        className={`flex items-center justify-center ${
-                          index === 0 ? 'text-yellow-600' : 'text-gray-700'
-                        }`}
-                      >
-                        {index + 1}
-                        {index === 0 && <Trophy size={16} className="ml-1" />}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 font-semibold text-gray-800">{team.name}</td>
-                    <td className="px-4 py-3 text-center text-gray-600">{team.played}</td>
-                    <td className="px-4 py-3 text-center text-green-600 font-semibold">{team.won}</td>
-                    <td className="px-4 py-3 text-center text-yellow-600">{team.drawn}</td>
-                    <td className="px-4 py-3 text-center text-red-600">{team.lost}</td>
-                    <td className="px-4 py-3 text-center text-gray-700">{team.goalsFor}</td>
-                    <td className="px-4 py-3 text-center text-gray-700">{team.goalsAgainst}</td>
-                    <td className={`px-4 py-3 text-center font-semibold ${
-                      team.goalDifference > 0 ? 'text-green-600' : team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600'
-                    }`}>
-                      {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
-                    </td>
-                    <td className="px-4 py-3 text-center font-bold text-lg bg-yellow-100">{team.points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {selectedGameData.hasGroupStage && availableGroups.length > 0 ? (
+          /* Group Stage Tables */
+          <div>
+            {availableGroups.map(groupName => renderGroupTable(groupName))}
 
             {/* Legend */}
             <div className="mt-6 p-4 bg-gray-50 rounded-lg">
@@ -212,11 +241,11 @@ const Standings = () => {
               </div>
             </div>
           </div>
-        ) : selectedGameData.hasGroupStage && (!standings || standings.length === 0) ? (
+        ) : selectedGameData.hasGroupStage && availableGroups.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
             <TrendingUp className="mx-auto mb-4 text-gray-300" size={64} />
-            <p className="text-xl">No standings data yet</p>
-            <p className="text-sm mt-2">Results will appear here as matches are completed</p>
+            <p className="text-xl">No group stage matches scheduled yet</p>
+            <p className="text-sm mt-2">Schedule group matches to see standings tables</p>
           </div>
         ) : (
           /* Knockout Bracket View */

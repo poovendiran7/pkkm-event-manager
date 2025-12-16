@@ -7,9 +7,18 @@ import CarromIcon from '../components/CarromIcon';
 const Schedule = () => {
   const { schedules, liveMatches } = useEvent();
   const [selectedGame, setSelectedGame] = useState(GAMES[0].id);
+  const [selectedRound, setSelectedRound] = useState('all');
 
-  const currentSchedules = schedules[selectedGame] || [];
+  const allSchedules = schedules[selectedGame] || [];
   const selectedGameData = GAMES.find(g => g.id === selectedGame);
+
+  // Filter schedules by selected round
+  const currentSchedules = selectedRound === 'all'
+    ? allSchedules
+    : allSchedules.filter(schedule => schedule.round === selectedRound);
+
+  // Get unique rounds from schedules
+  const availableRounds = ['all', ...new Set(allSchedules.map(s => s.round))].filter(Boolean);
 
   const isLive = (matchId) => {
     return liveMatches.some(m => m.gameId === selectedGame && m.matchId === matchId);
@@ -49,12 +58,32 @@ const Schedule = () => {
 
       {/* Schedule Display */}
       <div className="bg-white rounded-2xl shadow-xl p-6">
-        <div className="flex items-center space-x-3 mb-6">
-          {renderGameIcon(selectedGameData, 'large')}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-800">{selectedGameData.name}</h3>
-            <p className="text-gray-600 capitalize">{selectedGameData.type} Event</p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div className="flex items-center space-x-3">
+            {renderGameIcon(selectedGameData, 'large')}
+            <div>
+              <h3 className="text-2xl font-bold text-gray-800">{selectedGameData.name}</h3>
+              <p className="text-gray-600 capitalize">{selectedGameData.type} Event</p>
+            </div>
           </div>
+
+          {/* Round Filter */}
+          {availableRounds.length > 1 && (
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-semibold text-gray-700">Filter by Round:</label>
+              <select
+                value={selectedRound}
+                onChange={(e) => setSelectedRound(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white"
+              >
+                {availableRounds.map(round => (
+                  <option key={round} value={round}>
+                    {round === 'all' ? 'All Rounds' : round}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         {currentSchedules.length === 0 ? (

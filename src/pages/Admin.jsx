@@ -234,7 +234,10 @@ const Admin = () => {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   >
                     <option value="">Select Round</option>
-                    <option value="Group Stage">Group Stage</option>
+                    <option value="Group A">Group A</option>
+                    <option value="Group B">Group B</option>
+                    <option value="Group C">Group C</option>
+                    <option value="Group D">Group D</option>
                     <option value="Quarter Final 1">Quarter Final 1</option>
                     <option value="Quarter Final 2">Quarter Final 2</option>
                     <option value="Quarter Final 3">Quarter Final 3</option>
