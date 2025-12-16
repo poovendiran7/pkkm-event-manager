@@ -1,0 +1,8 @@
+Game ID,Game Type,Team/Player 1,Team/Player 2,Pair 1,Pair 2,Round,Time,Venue,Notes
+football,team,Team Red,Team Blue,,,Group A - Match 1,2:00 PM,Main Ground,Opening match
+basketball,team,Team Alpha,Team Beta,,,Group B - Match 1,3:00 PM,Court 1,
+badminton-singles-men,singles,John Doe,Mike Smith,,,Quarter Final 1,9:00 AM,Court A,
+badminton-singles-women,singles,Jane Doe,Sarah Lee,,,Quarter Final 1,9:30 AM,Court A,
+badminton-mixed-doubles,mixed-doubles,,,,John & Jane,Mike & Sarah,Semifinal 1,10:00 AM,Court B,
+carrom,team,Team Thunder,Team Lightning,,,Group A - Match 1,11:00 AM,Hall 1,
+chess,singles,Alex Kumar,David Chen,,,Round 1,1:00 PM,Hall 2,Best of 3

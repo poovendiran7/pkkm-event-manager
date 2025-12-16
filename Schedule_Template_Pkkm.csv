@@ -1,0 +1,15 @@
+Team/Player 1,Team/Player 2,Round,Time,Venue,Notes (Optional),,Guide
+Team Red,Team Blue,Group A,2:00 PM,Court 1,Opening match,,##If there is only a single group then just use the name Group Stage
+Team Green,Team Yellow,Group A,3:00 PM,Court 2,,,##If there is only a single group then just use the name Group Stage
+Team Red,Team Green,Group A,4:00 PM,Court 1,,,##If there is only a single group then just use the name Group Stage
+Team Blue,Team Yellow,Group B,2:00 PM,Court 2,,,##If there is only a single group then just use the name Group Stage
+Team Purple,Team Orange,Group B,3:00 PM,Court 1,,,##If there is only a single group then just use the name Group Stage
+Team Purple,Team Orange,Group Stage,3:00 PM,Court 2,,,##If there is only a single group then just use the name Group Stage
+Winner A,Runner B,Quarter Final 1,9:00 AM,Court 1,Winners of Group A vs Group B,,##knockout schedule precreated and can be updated with the Team names later
+Winner B,Runner A,Quarter Final 2,10:00 AM,Court 2,,,##knockout schedule precreated and can be updated with the Team names later
+Winner C,Runner D,Quarter Final 1,9:00 AM,Court 1,Winners of Group A vs Group B,,##knockout schedule precreated and can be updated with the Team names later
+Winner D,Runner C,Quarter Final 2,10:00 AM,Court 2,,,##knockout schedule precreated and can be updated with the Team names later
+Winner QF1,Winner QF2,Semifinal 1,2:00 PM,Court 1,,,##knockout schedule precreated and can be updated with the Team names later
+Winner QF3,Winner QF4,Semifinal 2,3:00 PM,Court 2,,,##knockout schedule precreated and can be updated with the Team names later
+Loser SF1,Loser SF2,3rd-4th Placing,4:00 PM,Court 1,Bronze medal match,,##knockout schedule precreated and can be updated with the Team names later
+Winner SF1,Winner SF2,Final,5:00 PM,Court 2,Championship match,,##knockout schedule precreated and can be updated with the Team names later
