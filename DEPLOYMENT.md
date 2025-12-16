@@ -35,15 +35,18 @@ git push
 5. Add Environment Variables:
    Click **"Environment Variables"** and add each of these:
 
+   > **⚠️ SECURITY WARNING**: Never commit your actual Firebase credentials to Git!
+   > Get these values from your Firebase Console → Project Settings → General → Your apps
+
    ```
-   VITE_FIREBASE_API_KEY=AIzaSyBzV4ewwMfBNJoedvUsQGHq11d86345U18
-   VITE_FIREBASE_AUTH_DOMAIN=pkkm-sports-carnival.firebaseapp.com
-   VITE_FIREBASE_DATABASE_URL=https://pkkm-sports-carnival-default-rtdb.asia-southeast1.firebasedatabase.app
-   VITE_FIREBASE_PROJECT_ID=pkkm-sports-carnival
-   VITE_FIREBASE_STORAGE_BUCKET=pkkm-sports-carnival.firebasestorage.app
-   VITE_FIREBASE_MESSAGING_SENDER_ID=356904454186
-   VITE_FIREBASE_APP_ID=1:356904454186:web:2b1a7695ac3224ddb6db53
-   VITE_FIREBASE_MEASUREMENT_ID=G-9F49EM548S
+   VITE_FIREBASE_API_KEY=your_firebase_api_key_here
+   VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+   VITE_FIREBASE_DATABASE_URL=https://your_project_id-default-rtdb.region.firebasedatabase.app
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
    ```
 
 6. Click **"Deploy"**
