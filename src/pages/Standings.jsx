@@ -12,18 +12,28 @@ const Standings = () => {
   const currentResults = results[selectedGame] || [];
   const currentSchedules = schedules[selectedGame] || [];
 
-  // Get all groups that have schedules
+  // Get all groups that have schedules or results
   const getAvailableGroups = () => {
     const groups = new Set();
+
+    // Add groups from schedules
     currentSchedules.forEach(schedule => {
       if (schedule.round && schedule.round.startsWith('Group ')) {
         groups.add(schedule.round);
       }
     });
+
+    // Add groups from results
+    currentResults.forEach(result => {
+      if (result.round && result.round.startsWith('Group ')) {
+        groups.add(result.round);
+      }
+    });
+
     return Array.from(groups).sort();
   };
 
-  const availableGroups = useMemo(() => getAvailableGroups(), [currentSchedules]);
+  const availableGroups = useMemo(() => getAvailableGroups(), [currentSchedules, currentResults]);
 
   // Calculate standings for a specific group
   const calculateGroupStandings = (groupName) => {
