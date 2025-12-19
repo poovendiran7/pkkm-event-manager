@@ -36,10 +36,19 @@ export const GAMES = [
     hasGroupStage: false,
   },
   {
-    id: 'badminton',
-    name: 'Badminton',
+    id: 'badminton-u40',
+    name: 'Badminton U40',
     icon: '🏸',
     color: 'from-blue-400 to-indigo-600',
+    type: 'mixed-doubles',
+    maxPairs: 8,
+    hasGroupStage: false,
+  },
+  {
+    id: 'badminton-a40',
+    name: 'Badminton A40',
+    icon: '🏸',
+    color: 'from-blue-500 to-indigo-700',
     type: 'mixed-doubles',
     maxPairs: 8,
     hasGroupStage: false,
@@ -83,9 +92,13 @@ export const initialScheduleData = {
     { id: 1, time: '9:00 AM', player1: 'Player 1', player2: 'Player 2', venue: 'Hall B', round: 'Round of 16' },
     { id: 2, time: '10:00 AM', player1: 'Player 3', player2: 'Player 4', venue: 'Hall B', round: 'Round of 16' },
   ],
-  badminton: [
+  'badminton-u40': [
     { id: 1, time: '9:00 AM', pair1: 'Pair A', pair2: 'Pair B', venue: 'Court 3', round: 'Quarter Final 1' },
     { id: 2, time: '10:00 AM', pair1: 'Pair C', pair2: 'Pair D', venue: 'Court 3', round: 'Quarter Final 2' },
+  ],
+  'badminton-a40': [
+    { id: 1, time: '11:00 AM', pair1: 'Pair E', pair2: 'Pair F', venue: 'Court 3', round: 'Quarter Final 1' },
+    { id: 2, time: '12:00 PM', pair1: 'Pair G', pair2: 'Pair H', venue: 'Court 3', round: 'Quarter Final 2' },
   ],
   esports: [
     { id: 1, time: '9:00 AM', team1: 'Team A', team2: 'Team B', venue: 'Gaming Zone', round: 'Group Stage' },
@@ -102,7 +115,8 @@ export const initialResultsData = {
   netball: [],
   carrom: [],
   chess: [],
-  badminton: [],
+  'badminton-u40': [],
+  'badminton-a40': [],
   esports: [],
   darts: [],
 };
